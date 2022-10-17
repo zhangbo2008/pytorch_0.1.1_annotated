@@ -1,0 +1,1 @@
+/usr/bin/cc  -fopenmp -DCHECK_FUNCTION_EXISTS=shm_open    -rdynamic CMakeFiles/cmTC_f9096.dir/CheckFunctionExists.c.o  -o cmTC_f9096 
