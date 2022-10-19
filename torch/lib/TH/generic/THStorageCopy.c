@@ -1,7 +1,7 @@
 #ifndef TH_GENERIC_FILE
 #define TH_GENERIC_FILE "generic/THStorageCopy.c"
 #else
-
+//提供storage的复制函数. // 从src复制到storage
 void THStorage_(rawCopy)(THStorage *storage, real *src)
 {
   long i;

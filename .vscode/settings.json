@@ -3,7 +3,14 @@
         "stack": "cpp",
         "vector": "cpp",
         "th.h": "c",
-        "thfileprivate.h": "c"
+        "thfileprivate.h": "c",
+        "thatomic.h": "c",
+        "thgeneral.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c",
+        "string": "c"
     },
     "python.pythonPath": "/usr/bin/python"
 }

@@ -37,7 +37,7 @@ distutils.ccompiler.CCompiler.compile = parallelCCompile
 ################################################################################
 # Custom build commands
 ################################################################################
-
+# 用来生成神经网络的c调用.
 class build_deps(Command):
     user_options = []
 
@@ -70,7 +70,7 @@ class build_module(Command):
         self.run_command('build_py')
         self.run_command('build_ext')
 
-
+# 生成TH库包的c包装.
 class build_ext(setuptools.command.build_ext.build_ext):
     def run(self):
         # cwrap depends on pyyaml, so we can't import it earlier

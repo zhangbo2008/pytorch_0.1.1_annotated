@@ -1,8 +1,8 @@
 #ifndef TH_GENERIC_FILE
 #define TH_GENERIC_FILE "generic/THTensor.c"
 #else
-
-/**** access methods ****/
+//一堆get方法.
+/**** access methods ****/ //get保存方法.
 THStorage *THTensor_(storage)(const THTensor *self)
 {
   return self->storage;
@@ -17,16 +17,16 @@ int THTensor_(nDimension)(const THTensor *self)
 {
   return self->nDimension;
 }
-
+//返回dim这个维度的shape
 long THTensor_(size)(const THTensor *self, int dim)
 {
   THArgCheck((dim >= 0) && (dim < self->nDimension), 2, "dimension %d out of range of %dD tensor",
       dim+1, THTensor_(nDimension)(self));
   return self->size[dim];
 }
-
+//返回第dim个维度的stride
 long THTensor_(stride)(const THTensor *self, int dim)
-{
+{ //dim >= 0) && (dim < self->nDimension) 条件.
   THArgCheck((dim >= 0) && (dim < self->nDimension), 2, "dimension %d out of range of %dD tensor", dim+1,
       THTensor_(nDimension)(self));
   return self->stride[dim];
@@ -34,7 +34,7 @@ long THTensor_(stride)(const THTensor *self, int dim)
 
 THLongStorage *THTensor_(newSizeOf)(THTensor *self)
 {
-  THLongStorage *size = THLongStorage_newWithSize(self->nDimension);
+  THLongStorage *size = THLongStorage_newWithSize(self->nDimension);//这里面size名字起错了,他实际上表示一个新的storage
   THLongStorage_rawCopy(size, self->size);
   return size;
 }

@@ -10,7 +10,7 @@
 #define n _MERSENNE_STATE_N
 #define m _MERSENNE_STATE_M
 
-/* Creates (unseeded) new generator*/
+/* Creates (unseeded) new generator*///创建一个新的随机生成器,unnseeded
 static THGenerator* THGenerator_newUnseeded()
 {
   THGenerator *self = THAlloc(sizeof(THGenerator));
@@ -22,7 +22,7 @@ static THGenerator* THGenerator_newUnseeded()
 }
 
 /* Creates new generator and makes sure it is seeded*/
-THGenerator* THGenerator_new()
+THGenerator* THGenerator_new()//创建生成器seeded
 {
   THGenerator *self = THGenerator_newUnseeded();
   THRandom_seed(self);
@@ -136,7 +136,7 @@ unsigned long THRandom_seed(THGenerator *_generator)
 #define MIXBITS(u,v) ( ((u) & UMASK) | ((v) & LMASK) )
 #define TWIST(u,v) ((MIXBITS(u,v) >> 1) ^ ((v)&1UL ? MATRIX_A : 0UL))
 /*********************************************************** That's it. */
-
+// MT随机算法.
 void THRandom_manualSeed(THGenerator *_generator, unsigned long the_seed_)
 {
   int j;

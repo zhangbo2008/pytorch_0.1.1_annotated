@@ -1,4 +1,4 @@
-#ifndef TH_GENERAL_INC
+#ifndef TH_GENERAL_INC   //这个文件会通过cmake命令生成THGeneral.h文件.
 #define TH_GENERAL_INC
 
 #include <stdlib.h>

@@ -5,10 +5,10 @@
 /* a la lua? dim, storageoffset, ...  et les methodes ? */
 
 #define TH_TENSOR_REFCOUNTED 1
-
+//张量的定义.
 typedef struct THTensor
 {
-    long *size;
+    long *size; //size是一个数组.
     long *stride;
     int nDimension;
     

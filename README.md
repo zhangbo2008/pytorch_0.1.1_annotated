@@ -1,3 +1,6 @@
+My goal is to add necessary annotate to the pytorch_0.1.1 , hopeful it will be healpful for all to understand pytorch soucecode .
+
+
 How to Debug PyTorch Source Code with vscode 
 
 i used version 0.1.1 . cause it is teh simplest for learning.
@@ -55,6 +58,16 @@ https://blog.csdn.net/lwljava/article/details/38517193
 
 利用这个指令研究TH库包里面的代码.
  gcc -E convolve5x5_sse.c  -o tmp.c
+
+删除THC THCNN 因为是cuda代码.我们不用学.省的以后搜索时候麻烦.
+
+
+再看tools看python和c怎么交互的.
+
+
+
+
+
 
 
 

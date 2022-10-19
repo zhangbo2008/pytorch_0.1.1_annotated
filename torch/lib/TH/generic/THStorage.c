@@ -1,13 +1,13 @@
 #ifndef TH_GENERIC_FILE
 #define TH_GENERIC_FILE "generic/THStorage.c"
 #else
-
-real* THStorage_(data)(const THStorage *self)
+//还是利用宏定义来实现类. 实现方法名的不重复.
+real* THStorage_(data)(const THStorage *self) //set data函数
 {
   return self->data;
 }
 
-long THStorage_(size)(const THStorage *self)
+long THStorage_(size)(const THStorage *self)//set size函数
 {
   return self->size;
 }
@@ -21,12 +21,12 @@ THStorage* THStorage_(new)(void)
 {
   return THStorage_(newWithSize)(0);
 }
-
+//!!!!!!!!!!!!!!!!!!!!!!storage最核心的初始化函数!!!!!!!!!!!!
 THStorage* THStorage_(newWithSize)(long size)
 {
   return THStorage_(newWithAllocator)(size, &THDefaultAllocator, NULL);
 }
-
+//给一个allocator,进行初始化.!!!!!!!!!!!!!!!!!!!
 THStorage* THStorage_(newWithAllocator)(long size,
                                         THAllocator *allocator,
                                         void *allocatorContext)

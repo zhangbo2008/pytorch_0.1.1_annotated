@@ -1,6 +1,6 @@
 #include "THFile.h"
 #include "THFilePrivate.h"
-
+//这个宏来批量定义读写函数.
 #define IMPLEMENT_THFILE_RW(TYPEC, TYPE)                          \
   size_t THFile_read##TYPEC##Raw(THFile *self, TYPE *data, size_t n)  \
   {                                                               \
@@ -11,15 +11,15 @@
   {                                                               \
     return (*self->vtable->write##TYPEC)(self, data, n);          \
   }
-
-IMPLEMENT_THFILE_RW(Byte, unsigned char)
+//基本类型读写
+IMPLEMENT_THFILE_RW(Byte, unsigned char) //展开之后就等于写好了2个读写函数.
 IMPLEMENT_THFILE_RW(Char, char)
 IMPLEMENT_THFILE_RW(Short, short)
 IMPLEMENT_THFILE_RW(Int, int)
 IMPLEMENT_THFILE_RW(Long, long)
 IMPLEMENT_THFILE_RW(Float, float)
 IMPLEMENT_THFILE_RW(Double, double)
-
+//string类型.
 size_t THFile_readStringRaw(THFile *self, const char *format, char **str_)
 {
   return self->vtable->readString(self, format, str_);
@@ -64,7 +64,7 @@ int THFile_isOpened(THFile *self)
 {
   return self->vtable->isOpened(self);
 }
-
+//设置文件的flag.
 #define IMPLEMENT_THFILE_FLAGS(FLAG) \
   int THFile_##FLAG(THFile *self)    \
   {                                  \
@@ -112,7 +112,7 @@ void THFile_clearError(THFile *self)
 {
   self->hasError = 0;
 }
-
+//scalar就是大小传入1,表示只读取一个字符或者写入一个字符.
 #define IMPLEMENT_THFILE_SCALAR(TYPEC, TYPE)                  \
   TYPE THFile_read##TYPEC##Scalar(THFile *self)               \
   {                                                           \
@@ -133,7 +133,7 @@ IMPLEMENT_THFILE_SCALAR(Int, int)
 IMPLEMENT_THFILE_SCALAR(Long, long)
 IMPLEMENT_THFILE_SCALAR(Float, float)
 IMPLEMENT_THFILE_SCALAR(Double, double)
-
+// 读写storage部分.
 #define IMPLEMENT_THFILE_STORAGE(TYPEC, TYPE)                           \
   size_t THFile_read##TYPEC(THFile *self, TH##TYPEC##Storage *storage)    \
   {                                                                     \

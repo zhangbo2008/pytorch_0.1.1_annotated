@@ -2,7 +2,7 @@
 #define TH_LAPACK_INC
 
 #include "THGeneral.h"
-
+//把函数都定义过来.具体实现就是引用lapack库包.
 #define THLapack_(NAME) TH_CONCAT_4(TH,Real,Lapack_,NAME)
 
 #define THLapackCheck(fmt, func, info , ...)						\

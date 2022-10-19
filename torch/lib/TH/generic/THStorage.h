@@ -1,7 +1,7 @@
 #ifndef TH_GENERIC_FILE
 #define TH_GENERIC_FILE "generic/THStorage.h"
 #else
-
+// tensor底层数据存在这个结构体里面.
 /* on pourrait avoir un liste chainee
    qui initialise math, lab structures (or more).
    mouais -- complique.

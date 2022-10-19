@@ -15,7 +15,7 @@
 #include <malloc/malloc.h>
 #endif
 
-/* Torch Error Handling */
+/* Torch Error Handling */ //错误处理函数.
 static void defaultTorchErrorHandlerFunction(const char *msg, void *data)
 {
   printf("$ Error: %s\n", msg);
@@ -111,7 +111,7 @@ static const long heapMaxDelta = 1e6; // limit to +/- 1MB before updating heapSi
 static __thread long heapSoftmax = 3e8; // 300MB, adjusted upward dynamically
 static const double heapSoftmaxGrowthThresh = 0.8; // grow softmax if >80% max after GC
 static const double heapSoftmaxGrowthFactor = 1.4; // grow softmax by 40%
-
+//=============下面是分配内存相关函数.
 /* Optional hook for integrating with a garbage-collected frontend.
  *
  * If torch is running with a garbage-collected frontend (e.g. Lua),
@@ -121,13 +121,13 @@ static const double heapSoftmaxGrowthFactor = 1.4; // grow softmax by 40%
  * (1) When a memory allocation (malloc, realloc, ...) fails
  * (2) When the total TH-allocated memory hits a dynamically-adjusted
  *     soft maximum.
- */
+ */ //设置torchGCFunction
 void THSetGCHandler( void (*torchGCFunction_)(void *data), void *data )
 {
   torchGCFunction = torchGCFunction_;
   torchGCData = data;
 }
-
+//返回指针ptr里面内容占用的大小.
 static long getAllocSize(void *ptr) {
 #if defined(__unix) && defined(HAVE_MALLOC_USABLE_SIZE)
   return malloc_usable_size(ptr);
@@ -139,7 +139,7 @@ static long getAllocSize(void *ptr) {
   return 0;
 #endif
 }
-
+//修改heap大小.
 static long applyHeapDelta() {
   long newHeapSize = THAtomicAddLong(&heapSize, heapDelta) + heapDelta;
   heapDelta = 0;
@@ -148,7 +148,7 @@ static long applyHeapDelta() {
 
 /* (1) if the torch-allocated heap size exceeds the soft max, run GC
  * (2) if post-GC heap size exceeds 80% of the soft max, increase the
- *     soft max by 40%
+ *     soft max by 40% 如果处理后的大小还是超过百分之80最大值,那么我们最大值增加百分之40.
  */
 static void maybeTriggerGC(long curHeapSize) {
   if (torchGCFunction && curHeapSize > heapSoftmax) {
@@ -163,7 +163,7 @@ static void maybeTriggerGC(long curHeapSize) {
   }
 }
 
-// hooks into the TH heap tracking
+// hooks into the TH heap tracking //让heap大小加size
 void THHeapUpdate(long size) {
   heapDelta += size;
 
@@ -178,7 +178,7 @@ void THHeapUpdate(long size) {
     maybeTriggerGC(newHeapSize);
   }
 }
-
+//分配一个内存大小size的指针,返回指针.
 static void* THAllocInternal(long size)
 {
   void *ptr;
@@ -186,7 +186,7 @@ static void* THAllocInternal(long size)
   if (size > 5120)
   {
 #if (defined(__unix) || defined(__APPLE__)) && (!defined(DISABLE_POSIX_MEMALIGN))
-    if (posix_memalign(&ptr, 64, size) != 0)
+    if (posix_memalign(&ptr, 64, size) != 0) //设置对齐方式. 第一个参数位置分配size大小,然后里面每一个对齐都是64字节.也就是不管你用多少,每一个单位都占用64.
       ptr = NULL;
 /*
 #elif defined(_WIN32)
@@ -263,7 +263,7 @@ void THFree(void *ptr)
   free(ptr);
 }
 
-double THLog1p(const double x)
+double THLog1p(const double x)//数据归一化的变形.让他更符合正太.
 {
 #if (defined(_MSC_VER) || defined(__MINGW32__))
   volatile double y = 1 + x;

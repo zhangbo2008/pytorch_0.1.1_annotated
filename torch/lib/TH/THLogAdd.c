@@ -11,7 +11,7 @@
 const double THLog2Pi=1.83787706640934548355;
 const double THLogZero=-DBL_MAX;
 const double THLogOne=0;
-
+// 给loga,给logb, 返回log(a+b), 这个算法可以保证a,b大的时候也不会超过float界限保证不会越界.
 double THLogAdd(double log_a, double log_b)
 {
   double minusdif;
@@ -54,7 +54,7 @@ double THLogSub(double log_a, double log_b)
     return log_a + log1p(-exp(minusdif));
 }
 
-/* Credits to Leon Bottou */
+/* Credits to Leon Bottou */ // 返回exp(-x)
 double THExpMinusApprox(double x)
 {
 #define EXACT_EXPONENTIAL 0
@@ -69,7 +69,7 @@ double THExpMinusApprox(double x)
 # define A4   (1.0172526e-5)
   if (x < 13.0)
   {
-/*    assert(x>=0); */
+/*    assert(x>=0); */   // e^(-x)^(-1/8)= e^(x/8)
     double y;
     y = A0+x*(A1+x*(A2+x*(A3+x*A4)));
     y *= y;
@@ -78,7 +78,7 @@ double THExpMinusApprox(double x)
     y = 1/y;
     return y;
   }
-  return 0;
+  return 0;// 如果x大于13, e^(-x)趋近于0了不用算了.
 # undef A0
 # undef A1
 # undef A2
